@@ -32,7 +32,7 @@ export class CoffeePageComponent implements OnInit {
 
   }
   GetCoffeeByID(key : string){
-    let coffeeObject = this.coffeeService.GetCoffee(key);
+    let coffeeObject = this.coffeeService.getCoffee(key);
     
     coffeeObject.valueChanges().subscribe(data => {
       console.log("coffee", data);

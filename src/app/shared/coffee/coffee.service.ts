@@ -21,12 +21,12 @@ export class CoffeeService {
     
    }
     // Fetch Single Student Object
-  GetCoffee(key: string) {
+  getCoffee(key: string) {
     this.coffeeObject = this.db.object('coffee/' + key);
     return this.coffeeObject;
   }
 
-  AddCoffee(coffee : Coffee){
+  addCoffee(coffee : Coffee){
     this.listCoffee = this.db.list('/coffee');
     this.listCoffee.push({
       // id : coffee.id,
@@ -36,7 +36,7 @@ export class CoffeeService {
       ownerCoffee: coffee.ownerCoffee,
       phone: coffee.phone,
       email: coffee.email,
-      createdDate: this.GetCurrentDate(),
+      createdDate: this.getCurrentDate(),
       createdBy: coffee.createdBy,
       updatedDate: coffee.updatedDate,
       updatedBy: coffee.updatedBy,
@@ -47,7 +47,7 @@ export class CoffeeService {
   }
 
 
-  UpdateCoffee(coffee : Coffee){
+  updateCoffee(coffee : Coffee){
     this.db
     .object('/coffee/' + coffee.$key)
     .update({
@@ -57,24 +57,25 @@ export class CoffeeService {
       ownerCoffee: coffee.ownerCoffee,
       phone: coffee.phone,
       email: coffee.email,
-      updatedDate: this.GetCurrentDate(),
+      updatedDate: this.getCurrentDate(),
       updatedBy: coffee.updatedBy,
       status: coffee.status
     });
 
   }
 
-  DeleteCoffee(coffee: Coffee) {
+  deleteCoffee(coffee: Coffee) {
     this.db
       .object('/coffee/'+ coffee.$key)
       .remove();
   }
 
-  GetListCoffee() {
+  getListCoffee() {
     this.listCoffee = this.db.list('coffee');
     return this.listCoffee;
   }
-  GetCurrentDate() {
+
+  getCurrentDate() {
     var today = new Date();
     var date =
       today.getFullYear() +

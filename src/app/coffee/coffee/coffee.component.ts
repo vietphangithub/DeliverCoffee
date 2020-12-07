@@ -66,7 +66,7 @@ export class CoffeeComponent implements OnInit {
   getDataCoffee($event) {
     this.isAdd = false;
     console.log('$event', $event);
-    this.coffeeService.GetCoffee($event).valueChanges().subscribe(data => {
+    this.coffeeService.getCoffee($event).valueChanges().subscribe(data => {
       console.warn('coffee', data);
       data['$key'] = $event;
      
@@ -75,13 +75,13 @@ export class CoffeeComponent implements OnInit {
   }
 
 
-  submitCoffee(coffee){
-    this.coffeeService.AddCoffee(coffee);
-    this.resetForm();
+  addCoffee(coffee){
+    this.coffeeService.addCoffee(coffee);
     this.toastr.success(
       this.coffeeForm.controls['name'].value + ' successfully added!'
     );
-    this.isAdd = true;
+    this.resetForm();
+    this.isAdd = false;
 
 
   }
@@ -90,8 +90,14 @@ export class CoffeeComponent implements OnInit {
     this.coffeeForm.reset();
     this.isAdd = true; 
   }
-  updateCoffee(){
-
+  
+  updateCoffee(coffee){
+    this.coffeeService.updateCoffee(coffee);
+    this.toastr.success(
+      this.coffeeForm.controls['name'].value + ' successfully updated!'
+    );
+    this.resetForm();
+    this.isAdd = true;
   }
 
 }

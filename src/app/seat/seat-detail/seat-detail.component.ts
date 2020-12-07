@@ -57,8 +57,8 @@ export class SeatDetailComponent implements OnInit {
     });
   }
 
-  onAddVisiting(value) {
-    this._visitingService.AddVisiting(value);
+  onAddVisiting(seat) {
+    this._visitingService.addSeat(seat);
     console.log('add coffeeID', this.coffeeID);
     // this.ResetForm();
     this._toastr.success(
@@ -68,8 +68,13 @@ export class SeatDetailComponent implements OnInit {
   }
 
   updateSeat(seat){
-    alert(seat);
-    console.log('seat',seat);
+    this._visitingService.updateSeat(seat);
+    console.log('add coffeeID', this.coffeeID);
+    // this.ResetForm();
+    this._toastr.success(
+      this.frmInputVisiting.controls['cardCode'].value + ' successfully added!'
+    );
+    this.isAdded = false;
   }
 
   ResetForm() {

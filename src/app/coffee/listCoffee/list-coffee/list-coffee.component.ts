@@ -27,7 +27,7 @@ export class ListCoffeeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    let s = this.coffeeService.GetListCoffee();
+    let s = this.coffeeService.getListCoffee();
     s.snapshotChanges().subscribe(data => {
       // Using snapshotChanges() method to retrieve list of data along with metadata($key)
       this.coffees = [];
@@ -40,16 +40,16 @@ export class ListCoffeeComponent implements OnInit {
 
   }
 
-  SelectCoffee(coffee){
+  selectCoffee(coffee){
     console.log('select coffee:', coffee);
-    this.SendDataCoffee(coffee.$key);
+    this.sendDataCoffee(coffee.$key);
   }
 
 
   // This method raises the custom event. We will bind this
   // method to the change event of all the 3 radio buttons
  
-  SendDataCoffee(key : string) {
+  sendDataCoffee(key : string) {
     console.log('groupID = ', key);
     this.messageEvent.emit(key);
   }

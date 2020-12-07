@@ -22,8 +22,8 @@ export class ListSeatDoneComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let dateForlder = this.visitingService.GetForMatDateDDMMYYYY();
-    let s = this.visitingService.GetListVisiting(this.coffeeID, dateForlder);
+    let dateForlder = this.visitingService.getForMatDateDDMMYYYY();
+    let s = this.visitingService.GetListSeat(this.coffeeID, dateForlder);
     s.snapshotChanges().subscribe(data => {
       // Using snapshotChanges() method to retrieve list of data along with metadata($key)
       this.seats = [];
@@ -40,7 +40,7 @@ export class ListSeatDoneComponent implements OnInit {
 
   onWaiting(seat){
     seat.status = 0;
-    this.visitingService.UpdateVisiting(seat);
+    this.visitingService.updateSeat(seat);
     console.log('seat', seat);
   }
 

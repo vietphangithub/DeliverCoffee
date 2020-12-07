@@ -16,10 +16,10 @@ export class VisitingService {
   dateDDMMYYYY : string;
 
   constructor(public db: AngularFireDatabase) {
-    this.dateDDMMYYYY = this.GetForMatDateDDMMYYYY();
+    this.dateDDMMYYYY = this.getForMatDateDDMMYYYY();
   }
 
-  AddVisiting(visiting: Visiting) {
+  addSeat(visiting: Visiting) {
     this.listVisiting = this.db.list('/seat/' + visiting.coffeeID + '/' + this.dateDDMMYYYY) ;
     console.log('add seat', visiting);
     this.listVisiting.push({
@@ -31,49 +31,45 @@ export class VisitingService {
       status: visiting.status,
 
       dateFolder:this.dateDDMMYYYY,
-      orderedDate: this.GetCurrentDate(),
+      orderedDate: this.getCurrentDate(),
       ordereddBy: visiting.ordereddBy,
       doneDate: '',
       doneBy: ''
     });
 
-   
+  }
+
+  getLastSeat(){
+  
   }
 
 
-  UpdateVisiting(visiting: Visiting) {
-   
+  updateSeat(visiting: Visiting) {
+   console.log('update:', visiting);
     this.db
       .object('/seat/' + visiting.coffeeID + '/' + visiting.dateFolder + '/' + visiting.$key)
       .update({
         cardCode: visiting.cardCode,
         visiting: visiting.visiting,
         status: visiting.status,
-        doneDate: this.GetCurrentDate(),
+        doneDate: this.getCurrentDate(),
         doneBy: visiting.doneBy
       });
   }
 
-  DeleteVisiting(visiting: Visiting) {
+  deleteSeat(visiting: Visiting) {
     this.db
       .object('/seat/' + visiting.coffeeID + '/' + visiting.dateFolder + '/' + visiting.$key)
       .remove();
   }
 
-  GetListVisiting(coffeeID, dateFolder) {
+  GetListSeat(coffeeID, dateFolder) {
     this.listVisiting = this.db.list('seat/' + coffeeID + '/' + dateFolder);
     return this.listVisiting;
   }
 
 
-
-  // GetVisiting(id: string) {
-  //   this.vistingObject = this.db.object('seat/' + id);
-  //   console.log('Get seat' + id + ': ' + this.vistingObject);
-  //   return this.vistingObject;
-  // }
-
-  GetCurrentDate() {
+  getCurrentDate() {
     var today = new Date();
     var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' +today.getFullYear();
   
@@ -84,13 +80,15 @@ export class VisitingService {
   }
 
 
-  GetForMatDateDDMMYYYY(){
+  getForMatDateDDMMYYYY(){
     const dateObj = new Date();
-    const month = dateObj.getMonth();
+    const month = dateObj.getMonth() + 1;
     const day = String(dateObj.getDate()).padStart(2, '0');
     const year = dateObj.getFullYear();
 
-    return  day + month + year;
+    let formatYear =   year.toString() + month.toString() + day;
+    return formatYear;
+
 
   }
 }

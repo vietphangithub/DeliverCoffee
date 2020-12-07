@@ -1,7 +1,7 @@
 <div class="pricing-header mx-auto">
-        <div class="panel-heading">
-                <h3 class="panel-title text-center">Coffee List</h3>
-              </div>
+  <div class="panel-heading">
+    <h3 class="panel-title text-center">Coffee List</h3>
+  </div>
   <div class="table-responsive">
     <table
       class="table table-bordered table-responsive-sm table-responsive-md table-responsive-lg"
@@ -17,18 +17,22 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let coffee of coffees" 
-        (click)="SelectCoffee(coffee);"
-        >
+        <tr *ngFor="let coffee of coffees" (click)="selectCoffee(coffee)">
           <td>{{ coffee.name }}</td>
           <td>{{ coffee.address }}</td>
           <td>{{ coffee.ownerCoffee }}</td>
           <td>{{ coffee.phone }}</td>
           <td>{{ coffee.email }}</td>
-         <td>
-            <a class="nav-link" routerLink="/coffee-seat/{{coffee.$key}}" routerLinkActive="active">
-              Go</a>
-         </td>
+          <td class="text-center">
+           
+            <a
+              class="nav-link"
+              routerLink="/coffee-seat/{{ coffee.$key }}"
+              routerLinkActive="active"
+            >
+              Go</a
+            >
+          </td>
         </tr>
       </tbody>
     </table>
