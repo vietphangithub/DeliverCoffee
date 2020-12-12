@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router'; // ActivatedRoue is us
 
 import { VisitingService } from '../../shared/visiting/visiting.service';
 import { Visiting } from '../../shared/visiting/visiting';
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 @Component({
   selector: 'app-seat-detail',
@@ -23,13 +24,14 @@ export class SeatDetailComponent implements OnInit {
   public listVisiting: Visiting[];
   public isAdded: Boolean;
   public coffeeID: string;
-  public userID : string
+  public userID: string;
+  public _visitorId: string
 
   constructor(
     public _fb: FormBuilder,
     public _visitingService: VisitingService,
     public _toastr: ToastrService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     // this.coffeeID = localStorage.getItem('seat-coffeeID');
     this.coffeeID = this.route.snapshot.params.id;
@@ -37,10 +39,10 @@ export class SeatDetailComponent implements OnInit {
 
     // this.userID = localStorage.getItem('seat-userID'); //Set Global
     this.userID = '3';
-    console.log('seat-userID',this.userID);
-
+    console.log('seat-userID', this.userID);
   }
   ngOnInit(): void {
+    this.GetDeviceID();
     this.visitingTable = new Visiting();
     this.isAdded = true;
     this.frmInputVisiting = this._fb.group({
@@ -53,7 +55,8 @@ export class SeatDetailComponent implements OnInit {
       orderedDate: '',
       ordereddBy: '1',
       doneDate: '',
-      doneBy: '1'
+      doneBy: '1',
+      deviceId: this._visitorId
     });
   }
 
@@ -67,6 +70,11 @@ export class SeatDetailComponent implements OnInit {
     this.isAdded = false;
   }
 
+  getLocationAndCardIdWithDeviceId(deviceId : string) {
+    this._visitingService.getLocationAndCardIdWithDeviceId();
+  }
+
+
   updateSeat(seat){
     this._visitingService.updateSeat(seat);
     console.log('add coffeeID', this.coffeeID);
@@ -79,5 +87,20 @@ export class SeatDetailComponent implements OnInit {
 
   ResetForm() {
     this.frmInputVisiting.reset();
+  }
+
+  GetDeviceID() {
+    (async () => {
+      // We recommend to call `load` at application startup.
+      const fp = await FingerprintJS.load();
+
+      // The FingerprintJS agent is ready.
+      // Get a visitor identifier when you'd like to.
+      const result = await fp.get();
+
+      // This is the visitor identifier:
+      this._visitorId = result.visitorId;
+      console.log('GetDeviceID', this._visitorId);
+    })();
   }
 }

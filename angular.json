@@ -18,7 +18,9 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "allowedCommonJsDependencies": ["firebase/app"],
+            "allowedCommonJsDependencies": [
+              "firebase/app"
+            ],
             "aot": true,
             "assets": [
               "src/favicon.ico",
@@ -92,7 +94,7 @@
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
-            ],  
+            ],
             "scripts": []
           }
         },
@@ -122,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "DeliverCoffee"
+    }
+  },
+  "defaultProject": "DeliverCoffee",
+  "cli": {
+    "analytics": false
+  }
 }

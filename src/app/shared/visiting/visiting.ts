@@ -10,5 +10,5 @@ export class Visiting {
     ordereddBy: string;
     doneDate: string;
     doneBy:string;
-
+    deviceId: string;
 }

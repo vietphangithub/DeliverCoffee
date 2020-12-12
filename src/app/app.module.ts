@@ -28,6 +28,13 @@ import { ListSeatComponent } from './seat/list-seat/list-seat.component';
 import { ListSeatDoneComponent } from './seat/list-seat-done/list-seat-done.component';
 import { LoginComponent } from './login/login.component';
 
+
+import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { Uid } from '@ionic-native/uid/ngx';
+import { Device } from '@ionic-native/device/ngx';
+
+
+
 // Service
 
 @NgModule({
@@ -54,7 +61,9 @@ import { LoginComponent } from './login/login.component';
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot() // ToastrModule added
   ],
-  providers: [],
+  providers: [
+    Device
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
