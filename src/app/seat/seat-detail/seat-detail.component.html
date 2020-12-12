@@ -27,9 +27,8 @@
 
   <div class="row">
     <div class="container">
-      <form
-        [formGroup]="frmInputVisiting"
-      >
+      <form [formGroup]="frmInputVisiting">
+        <div id = "deviceId" formControlName="deviceId" class="DeviceID_{{_visitorId}}" hidden>{{_visitorId}}</div>
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title text-center">Vui lòng nhập thông tin</h3>
@@ -37,28 +36,16 @@
           <div class="panel-body">
             <div class="form-group">
               <label for="cardCode">Mã thẻ</label>
-              <input
-                id="cardCode"
-                formControlName="cardCode"
-                type="text"
-                class="form-control"
-                required
-              />
+              <input id="cardCode" formControlName="cardCode" type="text" class="form-control" required />
             </div>
             <div class="form-group">
               <label for="visiting">Vị trí ngồi</label>
-              <input
-                id="visiting"
-                formControlName="visiting"
-                type="text"
-                class="form-control"
-                required
-              />
+              <input id="visiting" formControlName="visiting" type="text" class="form-control" required />
             </div>
           </div>
           <div class="panel-footer">
-            <button *ngIf="isAdded" (click) = "onAddVisiting(frmInputVisiting.value)" class="btn btn-primary">Lưu</button>
-            <button (click) = "updateSeat(frmInputVisiting.value)" *ngIf="!isAdded" class="btn btn-primary">Sửa</button>
+            <button *ngIf="isAdded" (click)="onAddVisiting(frmInputVisiting.value)" class="btn btn-primary">Lưu</button>
+            <button (click)="updateSeat(frmInputVisiting.value)" *ngIf="!isAdded" class="btn btn-primary">Sửa</button>
           </div>
         </div>
       </form>

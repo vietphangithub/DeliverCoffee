@@ -36,7 +36,10 @@ export class VisitingService {
       doneDate: '',
       doneBy: ''
     });
+  }
 
+  getLocationAndCardIdWithDeviceId(){
+  
   }
 
   getLastSeat(){
