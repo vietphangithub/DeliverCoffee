@@ -24,8 +24,7 @@ export class SeatDetailComponent implements OnInit {
   public listVisiting: Visiting[];
   public isAdded: Boolean;
   public coffeeID: string;
-  public userID: string;
-  public _visitorId: string
+  public userID:string;
 
   constructor(
     public _fb: FormBuilder,
@@ -36,18 +35,15 @@ export class SeatDetailComponent implements OnInit {
     // this.coffeeID = localStorage.getItem('seat-coffeeID');
     this.coffeeID = this.route.snapshot.params.id;
     console.log('this.coffeeID', this.coffeeID);
-
     // this.userID = localStorage.getItem('seat-userID'); //Set Global
-    this.userID = '3';
-    console.log('seat-userID', this.userID);
+   
   }
   ngOnInit(): void {
-    this.GetDeviceID();
     this.visitingTable = new Visiting();
     this.isAdded = true;
     this.frmInputVisiting = this._fb.group({
       $key: [''],
-      userID: this.userID,
+      userID: 0,
       coffeeID: this.coffeeID,
       cardCode: '',
       visiting: '',
@@ -55,14 +51,15 @@ export class SeatDetailComponent implements OnInit {
       orderedDate: '',
       ordereddBy: '1',
       doneDate: '',
-      doneBy: '1',
-      deviceId: this._visitorId
+      doneBy: '1'
     });
+
+    this.GetDeviceID();
   }
 
   onAddVisiting(seat) {
     this._visitingService.addSeat(seat);
-    console.log('add coffeeID', this.coffeeID);
+    console.log('add seat', seat);
     // this.ResetForm();
     this._toastr.success(
       this.frmInputVisiting.controls['cardCode'].value + ' successfully added!'
@@ -99,8 +96,11 @@ export class SeatDetailComponent implements OnInit {
       const result = await fp.get();
 
       // This is the visitor identifier:
-      this._visitorId = result.visitorId;
-      console.log('GetDeviceID', this._visitorId);
+      console.log('result', result);
+      console.log('GetDeviceID', result.visitorId);
+      this.frmInputVisiting.controls['userID'].setValue(result.visitorId.toString());
+
+      return result.visitorId.toString();
     })();
   }
 }
