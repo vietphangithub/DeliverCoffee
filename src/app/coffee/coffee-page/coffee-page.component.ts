@@ -1,7 +1,7 @@
 import { Component,OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import {CoffeeService} from '../../shared/coffee/coffee.service';
-import {Coffee} from '../../shared/coffee/coffee';
+import {CoffeeService} from '../../shared/services/coffeeService/coffee.service';
+import {Coffee} from '../../shared/models/coffee';
 
 
 @Component({

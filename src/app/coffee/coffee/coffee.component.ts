@@ -10,8 +10,8 @@ import {
 } from '@angular/forms'; // Reactive form services
 
 import { ActivatedRoute, Router } from '@angular/router'; // ActivatedRoue is used to get the current associated components information.
-import { CoffeeService } from '../../shared/coffee/coffee.service';
-import { Coffee } from '../../shared/coffee/coffee';
+import { CoffeeService } from '../../shared/services/coffeeService/coffee.service';
+import { Coffee } from '../../shared/models/coffee';
 import { Device } from '@ionic-native/device/ngx';
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 

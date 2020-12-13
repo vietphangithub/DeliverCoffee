@@ -9,8 +9,8 @@ import {
 } from '@angular/forms'; // Reactive form services
 import { ActivatedRoute, Router } from '@angular/router'; // ActivatedRoue is used to get the current associated components information.
 
-import { VisitingService } from '../../shared/visiting/visiting.service';
-import { Visiting } from '../../shared/visiting/visiting';
+import { SeatService } from '../../shared/services/seatService/seat.service';
+import { Seat } from '../../shared/models/seat';
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 @Component({
@@ -19,16 +19,16 @@ import FingerprintJS from '@fingerprintjs/fingerprintjs';
   styleUrls: ['./seat-detail.component.css']
 })
 export class SeatDetailComponent implements OnInit {
-  frmInputVisiting: FormGroup;
-  public visitingTable: Visiting;
-  public listVisiting: Visiting[];
+  frmInputSeat: FormGroup;
+  public seatTable: Seat;
+  public listSeat: Seat[];
   public isAdded: Boolean;
   public coffeeID: string;
   public userID:string;
 
   constructor(
     public _fb: FormBuilder,
-    public _visitingService: VisitingService,
+    public _SeatService: SeatService,
     public _toastr: ToastrService,
     private route: ActivatedRoute,
   ) {
@@ -39,14 +39,14 @@ export class SeatDetailComponent implements OnInit {
    
   }
   ngOnInit(): void {
-    this.visitingTable = new Visiting();
+    this.seatTable = new Seat();
     this.isAdded = true;
-    this.frmInputVisiting = this._fb.group({
+    this.frmInputSeat = this._fb.group({
       $key: [''],
       userID: 0,
       coffeeID: this.coffeeID,
       cardCode: '',
-      visiting: '',
+      seatCode: '',
       status: 0,
       orderedDate: '',
       ordereddBy: '1',
@@ -57,33 +57,33 @@ export class SeatDetailComponent implements OnInit {
     this.GetDeviceID();
   }
 
-  onAddVisiting(seat) {
-    this._visitingService.addSeat(seat);
+  onAddSeat(seat) {
+    this._SeatService.addSeat(seat);
     console.log('add seat', seat);
     // this.ResetForm();
     this._toastr.success(
-      this.frmInputVisiting.controls['cardCode'].value + ' successfully added!'
+      this.frmInputSeat.controls['cardCode'].value + ' successfully added!'
     );
     this.isAdded = false;
   }
 
   getLocationAndCardIdWithDeviceId(deviceId : string) {
-    this._visitingService.getLocationAndCardIdWithDeviceId();
+    this._SeatService.getLocationAndCardIdWithDeviceId();
   }
 
 
   updateSeat(seat){
-    this._visitingService.updateSeat(seat);
+    this._SeatService.updateSeat(seat);
     console.log('add coffeeID', this.coffeeID);
     // this.ResetForm();
     this._toastr.success(
-      this.frmInputVisiting.controls['cardCode'].value + ' successfully added!'
+      this.frmInputSeat.controls['cardCode'].value + ' successfully added!'
     );
     this.isAdded = false;
   }
 
   ResetForm() {
-    this.frmInputVisiting.reset();
+    this.frmInputSeat.reset();
   }
 
   GetDeviceID() {
@@ -98,7 +98,7 @@ export class SeatDetailComponent implements OnInit {
       // This is the visitor identifier:
       console.log('result', result);
       console.log('GetDeviceID', result.visitorId);
-      this.frmInputVisiting.controls['userID'].setValue(result.visitorId.toString());
+      this.frmInputSeat.controls['userID'].setValue(result.visitorId.toString());
 
       return result.visitorId.toString();
     })();

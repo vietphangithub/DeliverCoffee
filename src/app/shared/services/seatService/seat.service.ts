@@ -5,13 +5,13 @@ import {
   AngularFireObject
 } from '@angular/fire/database'; // Firebase modules for Database, Data list and Single object
 
-import { Visiting } from '../visiting/visiting';
+import { Seat } from '../../models/seat';
 
 @Injectable({
   providedIn: 'root'
 })
-export class VisitingService {
-  listVisiting: AngularFireList<any>; // Reference to Student data list, its an Observable
+export class SeatService {
+  listSeat: AngularFireList<any>; // Reference to Student data list, its an Observable
   vistingObject: AngularFireObject<any>; // Reference to Student object, its an Observable too
   dateDDMMYYYY : string;
 
@@ -19,20 +19,20 @@ export class VisitingService {
     this.dateDDMMYYYY = this.getForMatDateDDMMYYYY();
   }
 
-  addSeat(visiting: Visiting) {
-    this.listVisiting = this.db.list('/seat/' + visiting.coffeeID + '/' + this.dateDDMMYYYY) ;
-    console.log('add seat', visiting);
-    this.listVisiting.push({
+  addSeat(seat: Seat) {
+    this.listSeat = this.db.list('/seat/' + seat.coffeeID + '/' + this.dateDDMMYYYY) ;
+    console.log('add seat', seat);
+    this.listSeat.push({
       // $key:'111',
-      userID: visiting.userID,
-      coffeeID: visiting.coffeeID,
-      cardCode: visiting.cardCode,
-      visiting: visiting.visiting,
-      status: visiting.status,
+      userID: seat.userID,
+      coffeeID: seat.coffeeID,
+      cardCode: seat.cardCode,
+      seatCode: seat.seatCode,
+      status: seat.status,
 
       dateFolder:this.dateDDMMYYYY,
       orderedDate: this.getCurrentDate(),
-      ordereddBy: visiting.ordereddBy,
+      ordereddBy: seat.ordereddBy,
       doneDate: '',
       doneBy: ''
     });
@@ -47,28 +47,28 @@ export class VisitingService {
   }
 
 
-  updateSeat(visiting: Visiting) {
-   console.log('update:', visiting);
+  updateSeat(seat: Seat) {
+   console.log('update:', seat);
     this.db
-      .object('/seat/' + visiting.coffeeID + '/' + visiting.dateFolder + '/' + visiting.$key)
+      .object('/seat/' + seat.coffeeID + '/' + seat.dateFolder + '/' + seat.$key)
       .update({
-        cardCode: visiting.cardCode,
-        visiting: visiting.visiting,
-        status: visiting.status,
+        cardCode: seat.cardCode,
+        seatCode: seat.seatCode,
+        status: seat.status,
         doneDate: this.getCurrentDate(),
-        doneBy: visiting.doneBy
+        doneBy: seat.doneBy
       });
   }
 
-  deleteSeat(visiting: Visiting) {
+  deleteSeat(seat: Seat) {
     this.db
-      .object('/seat/' + visiting.coffeeID + '/' + visiting.dateFolder + '/' + visiting.$key)
+      .object('/seat/' + seat.coffeeID + '/' + seat.dateFolder + '/' + seat.$key)
       .remove();
   }
 
   GetListSeat(coffeeID, dateFolder) {
-    this.listVisiting = this.db.list('seat/' + coffeeID + '/' + dateFolder);
-    return this.listVisiting;
+    this.listSeat = this.db.list('seat/' + coffeeID + '/' + dateFolder);
+    return this.listSeat;
   }
 
 

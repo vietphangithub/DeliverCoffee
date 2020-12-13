@@ -7,7 +7,7 @@ import {
   AngularFireObject
 } from '@angular/fire/database'; // Firebase modules for Database, Data list and Single object
 
-import {Coffee} from '../coffee/coffee';
+import {Coffee} from '../../models/coffee';
 
 @Injectable({
   providedIn: 'root'

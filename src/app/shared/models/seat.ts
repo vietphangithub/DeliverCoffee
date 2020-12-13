@@ -1,9 +1,9 @@
-export class Visiting {
+export class Seat {
     $key: string;
     userID: string;
     coffeeID: string;
     cardCode: string;
-    visiting: string;
+    seatCode: string;
     status:number;
     dateFolder: string;
     orderedDate:string;

@@ -8,8 +8,8 @@ import {
 } from '@angular/forms'; // Reactive form services
 import { ToastrService } from 'ngx-toastr'; // Alert message using NGX toastr
 
-import {Coffee} from '../../../shared/coffee/coffee';
-import {CoffeeService} from '../../../shared/coffee/coffee.service';
+import {Coffee} from '../../../shared/models/coffee';
+import {CoffeeService} from '../../../shared/services/coffeeService/coffee.service';
 
 @Component({
   selector: 'app-list-coffee',

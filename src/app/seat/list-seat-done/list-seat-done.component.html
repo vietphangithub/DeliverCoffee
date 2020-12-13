@@ -38,7 +38,7 @@
         <tbody>
           <tr *ngFor="let seat of seats">
             <td>{{ seat.cardCode }}</td>
-            <td>{{ seat.visiting }}</td>
+            <td>{{ seat.seatCode }}</td>
             <td>
               <b *ngIf="seat.status == 0" style="color: green">Đang chờ</b>
               <b *ngIf="seat.status == 1" style="color: green">Đã giao</b>

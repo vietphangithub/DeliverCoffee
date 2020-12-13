@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'; // ActivatedRoue is used to get the current associated components information.
 
-import { VisitingService } from '../../shared/visiting/visiting.service';
-import { Visiting } from '../../shared/visiting/visiting';
+import { SeatService } from '../../shared/services/seatService/seat.service';
+import { Seat } from '../../shared/models/seat';
 
 @Component({
   selector: 'app-list-seat',
@@ -11,18 +11,18 @@ import { Visiting } from '../../shared/visiting/visiting';
 })
 export class ListSeatComponent implements OnInit {
   coffeeID: string;
-  seats: Visiting[];
+  seats: Seat[];
   constructor(
     public route: ActivatedRoute,
-    public visitingService: VisitingService
+    public seatService: SeatService
   ) {
     this.coffeeID = this.route.snapshot.params.id;
     console.log('this.coffeeID', this.coffeeID);
   }
 
   ngOnInit(): void {
-    let dateForlder = this.visitingService.getForMatDateDDMMYYYY();
-    let s = this.visitingService.GetListSeat(this.coffeeID, dateForlder);
+    let dateForlder = this.seatService.getForMatDateDDMMYYYY();
+    let s = this.seatService.GetListSeat(this.coffeeID, dateForlder);
     s.snapshotChanges().subscribe(data => {
       // Using snapshotChanges() method to retrieve list of data along with metadata($key)
       this.seats = [];
@@ -32,7 +32,7 @@ export class ListSeatComponent implements OnInit {
         if(a['status'] == 0){
           a['$key'] = item.key;
           a['coffeeID'] = this.coffeeID;
-          this.seats.push(a as Visiting);
+          this.seats.push(a as Seat);
         }
        
       });
@@ -42,7 +42,7 @@ export class ListSeatComponent implements OnInit {
 
   onDone(seat){
     seat.status = 1;
-    this.visitingService.updateSeat(seat);
+    this.seatService.updateSeat(seat);
     console.log('seat', seat);
   }
 }
