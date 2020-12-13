@@ -14,14 +14,18 @@ export class SeatService {
   listSeat: AngularFireList<any>; // Reference to Student data list, its an Observable
   vistingObject: AngularFireObject<any>; // Reference to Student object, its an Observable too
   dateDDMMYYYY : string;
+  seatStr : string = 'seat';
 
-  constructor(public db: AngularFireDatabase) {
+  constructor(
+    public db: AngularFireDatabase
+    ) {
+    
     this.dateDDMMYYYY = this.getForMatDateDDMMYYYY();
   }
 
   addSeat(seat: Seat) {
-    this.listSeat = this.db.list('/seat/' + seat.coffeeID + '/' + this.dateDDMMYYYY) ;
-    console.log('add seat', seat);
+    this.listSeat = this.db.list('/'+ this.seatStr + '/' + seat.coffeeID + '/' + this.dateDDMMYYYY) ;
+    console.log('add seat service', seat);
     this.listSeat.push({
       // $key:'111',
       userID: seat.userID,
@@ -36,21 +40,15 @@ export class SeatService {
       doneDate: '',
       doneBy: ''
     });
-  }
 
-  getLocationAndCardIdWithDeviceId(){
-  
-  }
-
-  getLastSeat(){
-  
+    return this.listSeat;
   }
 
 
   updateSeat(seat: Seat) {
-   console.log('update:', seat);
+   console.log('update service:', seat);
     this.db
-      .object('/seat/' + seat.coffeeID + '/' + seat.dateFolder + '/' + seat.$key)
+      .object('/'+ this.seatStr + '/' + seat.coffeeID + '/' + seat.dateFolder + '/' + seat.$key)
       .update({
         cardCode: seat.cardCode,
         seatCode: seat.seatCode,
@@ -62,7 +60,7 @@ export class SeatService {
 
   deleteSeat(seat: Seat) {
     this.db
-      .object('/seat/' + seat.coffeeID + '/' + seat.dateFolder + '/' + seat.$key)
+      .object('/'+ this.seatStr + '/' + seat.coffeeID + '/' + seat.dateFolder + '/' + seat.$key)
       .remove();
   }
 

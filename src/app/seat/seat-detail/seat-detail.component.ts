@@ -44,22 +44,37 @@ export class SeatDetailComponent implements OnInit {
     this.frmInputSeat = this._fb.group({
       $key: [''],
       userID: 0,
-      coffeeID: this.coffeeID,
+      coffeeID: this.coffeeID, 
+      dateFolder: this._SeatService.dateDDMMYYYY,
       cardCode: '',
       seatCode: '',
       status: 0,
       orderedDate: '',
-      ordereddBy: '1',
+      ordereddBy: '',
       doneDate: '',
-      doneBy: '1'
+      doneBy: ''
     });
 
     this.GetDeviceID();
   }
 
   onAddSeat(seat) {
-    this._SeatService.addSeat(seat);
+    let s = this._SeatService.addSeat(seat);
     console.log('add seat', seat);
+    s.snapshotChanges().subscribe(data => {
+      // Using snapshotChanges() method to retrieve list of data along with metadata($key)
+   
+      data.forEach(item => {
+        let a = item.payload.toJSON();
+        if(a['status'] == 0 
+        && a['userID'] == seat.userID){
+          // a['$key'] = item.key;
+          this.frmInputSeat.controls['$key'].setValue(item.key);
+          console.log('keyID = ', this.frmInputSeat.controls['$key'].value);
+
+        }
+      });
+    });
     // this.ResetForm();
     this._toastr.success(
       this.frmInputSeat.controls['cardCode'].value + ' successfully added!'
@@ -67,14 +82,9 @@ export class SeatDetailComponent implements OnInit {
     this.isAdded = false;
   }
 
-  getLocationAndCardIdWithDeviceId(deviceId : string) {
-    this._SeatService.getLocationAndCardIdWithDeviceId();
-  }
-
-
   updateSeat(seat){
     this._SeatService.updateSeat(seat);
-    console.log('add coffeeID', this.coffeeID);
+    console.log('update  seat', seat);
     // this.ResetForm();
     this._toastr.success(
       this.frmInputSeat.controls['cardCode'].value + ' successfully added!'
@@ -99,6 +109,7 @@ export class SeatDetailComponent implements OnInit {
       console.log('result', result);
       console.log('GetDeviceID', result.visitorId);
       this.frmInputSeat.controls['userID'].setValue(result.visitorId.toString());
+      this.frmInputSeat.controls['ordereddBy'].setValue(result.visitorId.toString());
 
       return result.visitorId.toString();
     })();

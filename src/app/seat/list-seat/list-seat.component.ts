@@ -25,6 +25,7 @@ export class ListSeatComponent implements OnInit {
     let s = this.seatService.GetListSeat(this.coffeeID, dateForlder);
     s.snapshotChanges().subscribe(data => {
       // Using snapshotChanges() method to retrieve list of data along with metadata($key)
+     
       this.seats = [];
       data.forEach(item => {
         let a = item.payload.toJSON();
